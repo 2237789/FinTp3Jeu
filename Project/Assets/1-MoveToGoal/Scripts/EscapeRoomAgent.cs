@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.MLAgents;
@@ -46,8 +46,9 @@ public class EscapeRoomAgent : Agent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        
-        transform.position = new Vector3(Random.Range(-1380f, -1377f), 982.5f, Random.Range(1782f, 1785f));
+
+        transform.localPosition = new Vector3(Random.Range(-3.5f, -1f), 0.5f, Random.Range(-1f, 2.5f));
+
         //transform.position = new Vector3(-115.1f, 98.36981f, 205.4f);
 
 
