@@ -91,35 +91,7 @@ public class EscapeRoomAgent : Agent
     }
 
     //il fait
-    /*public override void OnActionReceived(ActionBuffers actions)
-    {
-        // Récupérer les actions
-        float moveX = actions.ContinuousActions[0];
-        float moveZ = actions.ContinuousActions[1];
 
-        // Créer le vecteur de mouvement
-        Vector3 move = new Vector3(moveX, 0, moveZ);
-
-        // Appliquer le mouvement
-        transform.Translate(move * Time.deltaTime * speed);
-
-        // Pénalité pour chaque pas de temps pour encourager l'efficacité
-        AddReward(-0.001f);
-        
-        // Récompense de proximité avec l'objectif actuel
-        if (!porteOuverte)
-        {
-            // Si la porte n'est pas ouverte, récompenser la proximité avec l'interrupteur
-            float distToInterrupteur = Vector3.Distance(transform.localPosition, interrupteurTransform.localPosition);
-            AddReward(-0.001f * distToInterrupteur);
-        }
-        else
-        {
-            // Si la porte est ouverte, récompenser la proximité avec la sortie
-            float distToSortie = Vector3.Distance(transform.localPosition, sortieTransform.localPosition);
-            AddReward(-0.001f * distToSortie);
-        }
-    }*/
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0];
