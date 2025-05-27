@@ -2,22 +2,22 @@
     "My Behavior": {
         "checkpoints": [
             {
-                "steps": 39418,
-                "file_path": "results\\ppo\\My Behavior\\My Behavior-39418.onnx",
+                "steps": 72406,
+                "file_path": "results\\ppo\\My Behavior\\My Behavior-72406.onnx",
                 "reward": null,
-                "creation_time": 1748293464.6912477,
+                "creation_time": 1748322117.5476475,
                 "auxillary_file_paths": [
-                    "results\\ppo\\My Behavior\\My Behavior-39418.pt"
+                    "results\\ppo\\My Behavior\\My Behavior-72406.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 39418,
+            "steps": 72406,
             "file_path": "results\\ppo\\My Behavior.onnx",
             "reward": null,
-            "creation_time": 1748293464.6912477,
+            "creation_time": 1748322117.5476475,
             "auxillary_file_paths": [
-                "results\\ppo\\My Behavior\\My Behavior-39418.pt"
+                "results\\ppo\\My Behavior\\My Behavior-72406.pt"
             ]
         }
     },

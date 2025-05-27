@@ -160,6 +160,10 @@ public class EscapeRoomAgent : Agent
             {
                 AddReward(0.5f); // Récompense pour avoir ouvert la porte
             }
+            else
+            {
+                AddReward(-0.5f); // Punition pour l'avoir refermée
+            }
         }
         else if (other.CompareTag("fin"))
         {
