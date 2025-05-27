@@ -10,7 +10,7 @@ public class EscapeRoomAgent : Agent
     [SerializeField] private Transform interrupteurTransform;
     [SerializeField] private Transform sortieTransform;
     [SerializeField] private GameObject porte;
-    [SerializeField] private float speed = 11f;
+    [SerializeField] private float speed = 5f;
     [SerializeField] private Renderer solRenderer;
     [SerializeField] private Material materielSucces;
     [SerializeField] private Material materielEchec;
@@ -63,13 +63,13 @@ public class EscapeRoomAgent : Agent
         if (modeAleatoire)
         {
             transform.localPosition = GenererPositionDansZone();
-           // interrupteurTransform.localPosition = GenererPositionDansZone();
+            interrupteurTransform.localPosition = GenererPositionDansZone();
         }
         else
         {
             // Position fixe pour entraînement de base
             transform.localPosition = new Vector3(-3f, 0f, 0.8f);
-            interrupteurTransform.localPosition = new Vector3(0.43f, 0.98f, 0.10f);
+            interrupteurTransform.localPosition = new Vector3(3.9f, 0.6f, -0.10f);
         }
 
 
@@ -108,7 +108,9 @@ public class EscapeRoomAgent : Agent
         float moveZ = actions.ContinuousActions[1];
 
         Vector3 move = new Vector3(moveX, 0, moveZ);
-        transform.Translate(move * Time.deltaTime * speed);
+        Vector3 newPosition = rb.position + move * Time.fixedDeltaTime * speed;
+
+        rb.MovePosition(newPosition);
 
         AddReward(-0.001f); // pénalité temporelle
 
@@ -171,7 +173,7 @@ public class EscapeRoomAgent : Agent
             if (porteOuverte)
             {
                 Debug.Log("Succès!");
-                AddReward(1f); // Succès
+                AddReward(1.5f); // Succès
                 solRenderer.material = materielSucces;
             }
             else
