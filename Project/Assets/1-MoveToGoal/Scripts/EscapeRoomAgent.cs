@@ -14,6 +14,8 @@ public class EscapeRoomAgent : Agent
     [SerializeField] private Renderer solRenderer;
     [SerializeField] private Material materielSucces;
     [SerializeField] private Material materielEchec;
+    [SerializeField] private bool modeAleatoire = false;
+
     private Rigidbody rb;
     private bool porteOuverte = false;
     Vector3 positionSortie;
@@ -36,58 +38,66 @@ public class EscapeRoomAgent : Agent
 
     }
 
+
+    private Vector3 GenererPositionDansZone()
+    {
+        float minX = -3.7f;
+        float maxX = 5.0f;
+        float minZ = -2.8f;
+        float maxZ = 2.4f;
+
+        return new Vector3(
+            Random.Range(minX, maxX),
+            0.5f,
+            Random.Range(minZ, maxZ)
+        );
+    }
+
+
+
     public override void OnEpisodeBegin()
     {
-        //test 
-        lastDistanceToInterrupteur = Vector3.Distance(transform.localPosition, interrupteurTransform.localPosition);
-        lastDistanceToSortie = Vector3.Distance(transform.localPosition, sortieTransform.localPosition);
-
-        // Reset agent et éléments
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
+        if (modeAleatoire)
+        {
+            transform.localPosition = GenererPositionDansZone();
+           // interrupteurTransform.localPosition = GenererPositionDansZone();
+        }
+        else
+        {
+            // Position fixe pour entraînement de base
+            transform.localPosition = new Vector3(-3f, 0f, 0.8f);
+            interrupteurTransform.localPosition = new Vector3(0.43f, 0.98f, 0.10f);
+        }
 
-        transform.localPosition = new Vector3(Random.Range(-3.5f, -1f), 0.5f, Random.Range(-1f, 2.5f));
 
-        //transform.position = new Vector3(-115.1f, 98.36981f, 205.4f);
-
-
-
-        sortieTransform.localPosition = positionSortie;
-
-        // Réinitialisation de l'état de la porte
-        porte.SetActive(true); // porte fermée
+        porte.SetActive(true);
         porteOuverte = false;
 
-        // Réinitialisation du matériau du sol
-       /* if (solRenderer != null)
-        {
-            solRenderer.material =matActuel; 
-        }*/
+        lastDistanceToInterrupteur = Vector3.Distance(transform.localPosition, interrupteurTransform.localPosition);
+        lastDistanceToSortie = Vector3.Distance(transform.localPosition, sortieTransform.localPosition);
     }
+
 
     // il voit
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Position de l'agent
+        //position de l'agent
         sensor.AddObservation(transform.localPosition);
-
-        // Position de l'interrupteur
+        //position de l'interrupteur
         sensor.AddObservation(interrupteurTransform.localPosition);
 
-        // Position de la sortie
-      /*  sensor.AddObservation(sortieTransform.localPosition);
-
-        // État de la porte (1 = fermée, 0 = ouverte)
-        sensor.AddObservation(porteOuverte ? 0f : 1f);
-
-        // Direction vers l'interrupteur
         Vector3 dirToInterrupteur = interrupteurTransform.localPosition - transform.localPosition;
         sensor.AddObservation(dirToInterrupteur.normalized);
 
-        // Direction vers la sortie
-        Vector3 dirToSortie = sortieTransform.localPosition - transform.localPosition;
-        sensor.AddObservation(dirToSortie.normalized);*/
+        if (porteOuverte)
+        {
+            sensor.AddObservation(sortieTransform.localPosition);
+            Vector3 dirToSortie = sortieTransform.localPosition - transform.localPosition;
+            sensor.AddObservation(dirToSortie.normalized);
+        }
     }
 
     //il fait
