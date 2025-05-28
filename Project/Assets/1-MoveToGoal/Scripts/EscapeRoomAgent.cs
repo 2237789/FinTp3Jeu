@@ -38,6 +38,24 @@ public class EscapeRoomAgent : Agent
 
     }
 
+    void FixedUpdate()
+    {
+        Vector3 pos = transform.position;
+
+        bool horsLimite =
+            pos.y < -1f || pos.y > 5f; // trop bas ou trop haut
+            
+
+        if (horsLimite)
+        {
+            Debug.Log("Agent hors zone : " + pos);
+            AddReward(-1f); // Punition car il est sorti de la scène
+            EndEpisode();
+        }
+    }
+
+
+
 
     private Vector3 GenererPositionDansZone()
     {
